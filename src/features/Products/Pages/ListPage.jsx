@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import productsApi from '../../../api/productApi';
+import ProductFilters from '../components/ProductFilters';
 import ProducList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
@@ -39,7 +40,7 @@ function ListPage(props) {
   const [filter, setFilter] = useState({
     _page: 1,
     _limit: 9,
-    _sort: 'salePrice:ASC',
+    _sort: 'salePrice:DESC',
   });
 
   useEffect(() => {
@@ -57,6 +58,7 @@ function ListPage(props) {
     })();
   }, [filter]);
 
+  // get index of pagination
   const handlePageChange = (_, page) => {
     setFilter((preFilters) => ({
       ...preFilters,
@@ -71,21 +73,39 @@ function ListPage(props) {
     }));
   };
 
+  const handleFiltersChange = (newFilters) => {
+    setFilter((preFilters) => ({
+      ...preFilters,
+      ...newFilters,
+    }));
+  };
+
   return (
     <Box>
       <Container>
         <Grid container spacing={1}>
           <Grid item className={classes.left}>
-            <Paper elevation={0}>Left Column</Paper>
+            <Paper elevation={0}>
+              {loading ? (
+                <ProductSkeletonList length={1} />
+              ) : (
+                <ProductFilters filters={filter} onChange={handleFiltersChange} />
+              )}
+            </Paper>
           </Grid>
           <Grid item className={classes.right}>
             <Paper elevation={0} className={classes.paper}>
+              {/* onChangeSort: when it has new value it will be update to _sort and then
+                currentValueSort is an active tab
+              */}
               <ProductSort onChangeSort={handleSortChange} currentValueSort={filter._sort} />
               {loading ? <ProductSkeletonList length={9} /> : <ProducList data={productList} />}
               <Box className={classes.pagination}>
                 <Pagination
                   color="primary"
+                  // total page
                   count={Math.ceil(pagination.total / pagination.limit)}
+                  // current page
                   page={pagination.page}
                   onChange={handlePageChange}
                 />

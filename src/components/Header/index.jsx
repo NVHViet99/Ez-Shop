@@ -1,4 +1,4 @@
-import { Badge, Box, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,14 +6,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { AccountCircle, Close, ShoppingCart } from '@material-ui/icons';
+import { AccountCircle, Close } from '@material-ui/icons';
 import CodeIcon from '@material-ui/icons/Code';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
 import { logout } from 'features/Auth/userSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,6 @@ const MODE = {
 export default function Header() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.user.current);
-  const history = useHistory();
   const isLoggedIn = !!loggedInUser.id;
 
   const [open, setOpen] = useState(false);
@@ -73,6 +72,7 @@ export default function Header() {
   const handleLogoutClick = () => {
     const action = logout();
     dispatch(action);
+    setAnchorEl(null);
   };
 
   const classes = useStyles();
@@ -95,6 +95,9 @@ export default function Header() {
 
           <NavLink className={classes.link} to="/albums">
             <Button color="inherit">Albums</Button>
+          </NavLink>
+          <NavLink className={classes.link} to="/products">
+            <Button color="inherit">Products</Button>
           </NavLink>
 
           {!isLoggedIn && (

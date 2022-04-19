@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Tab, Tabs } from "@material-ui/core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Tab, Tabs } from '@material-ui/core';
 
 ProductSort.propTypes = {
   currentValueSort: PropTypes.string.isRequired,
@@ -8,18 +8,20 @@ ProductSort.propTypes = {
 };
 
 function ProductSort({ currentValueSort, onChangeSort }) {
+  //  có thay đổi báo lên parent
   const handleSortChange = (_, newValue) => {
     if (onChangeSort) {
-      console.log(newValue);
       onChangeSort(newValue);
     }
   };
 
   return (
     <Tabs
+      // currentValueSort: is an active tab
       value={currentValueSort}
       indicatorColor="primary"
       textColor="primary"
+      //NOTE neu co onChange thi handleSortChange and save value to onChangeSort
       onChange={handleSortChange}
       aria-label="disabled tabs example"
     >
