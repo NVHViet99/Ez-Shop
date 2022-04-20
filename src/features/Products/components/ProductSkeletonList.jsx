@@ -5,13 +5,14 @@ import { Skeleton } from '@material-ui/lab';
 
 ProductSkeletonList.propTypes = {
   length: PropTypes.number,
+  minHeight: PropTypes.number,
 };
 
-ProductSkeletonList.defaultProps = {
-  length: 10,
-};
+// ProductSkeletonList.defaultProps = {
+//   length: 10,
+// };
 
-function ProductSkeletonList({ length, minHeight }) {
+function ProductSkeletonList({ length = 10, minHeight }) {
   return (
     <Box minHeight={minHeight}>
       <Grid container>

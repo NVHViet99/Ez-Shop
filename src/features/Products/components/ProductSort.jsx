@@ -21,7 +21,7 @@ function ProductSort({ currentValueSort, onChangeSort }) {
       value={currentValueSort}
       indicatorColor="primary"
       textColor="primary"
-      //NOTE neu co onChange thi handleSortChange and save value to onChangeSort
+      //NOTE neu co onChange thi handleSortChange and save newValue to onChangeSort
       onChange={handleSortChange}
       aria-label="disabled tabs example"
     >

@@ -34,16 +34,16 @@ function FilterbyService({ filters = {}, onChange }) {
 
       <ul className={classes.list}>
         {[
-          { key: 'isPromotion', label: 'Discount' },
-          { key: 'isFreeShip', label: 'FreeShip' },
+          { name: 'isPromotion', label: 'Discount' },
+          { name: 'isFreeShip', label: 'FreeShip' },
         ].map((service) => (
-          <li key={service.key}>
+          <li key={service.name}>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={Boolean(filters[service.key])}
+                  checked={Boolean(filters[service.name])}
                   onChange={handleChange}
-                  name={service.key}
+                  name={service.name}
                   color="primary"
                 />
               }

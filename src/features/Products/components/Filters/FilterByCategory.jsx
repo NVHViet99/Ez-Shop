@@ -30,8 +30,10 @@ const useStyle = makeStyles((theme) => ({
 function FilterByCategory({ onChange }) {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
+
   const classes = useStyle();
 
+  //NOTEs get all category list and only save id and name to state
   useEffect(() => {
     (async () => {
       try {
@@ -50,9 +52,7 @@ function FilterByCategory({ onChange }) {
   }, []);
 
   const handleCategoryClick = (category) => {
-    if (onChange) {
-      onChange({ 'category.id': category.id });
-    }
+    if (onChange) onChange({ 'category.id': category.id });
   };
 
   return (

@@ -28,13 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const INIT_PRICE = { salePrice_gte: 0, salePrice_lte: 0 };
+
 function FilterByPrice({ onChange }) {
   const classes = useStyles();
 
-  const [rangePrice, setRangePrice] = useState({
-    salePrice_gte: 0,
-    salePrice_lte: 0,
-  });
+  const [rangePrice, setRangePrice] = useState(INIT_PRICE);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -44,11 +43,9 @@ function FilterByPrice({ onChange }) {
       [name]: value,
     }));
   };
+
   const handleReset = () => {
-    setRangePrice({
-      salePrice_gte: 0,
-      salePrice_lte: 0,
-    });
+    setRangePrice(INIT_PRICE);
   };
 
   const handleSubmit = () => {
@@ -61,9 +58,25 @@ function FilterByPrice({ onChange }) {
     <Box className={classes.root}>
       <Typography variant="subtitle2">SELECT RANGE PRICE</Typography>
       <Box className={classes.range}>
-        <TextField name="salePrice_gte" value={rangePrice.salePrice_gte} onChange={handleChange} />
+        <TextField
+          id="outlined-size-small"
+          variant="outlined"
+          size="small"
+          type="number"
+          name="salePrice_gte"
+          value={rangePrice.salePrice_gte}
+          onChange={handleChange}
+        />
         <span>-</span>
-        <TextField name="salePrice_lte" value={rangePrice.salePrice_lte} onChange={handleChange} />
+        <TextField
+          id="outlined-size-small"
+          variant="outlined"
+          size="small"
+          type="number"
+          name="salePrice_lte"
+          value={rangePrice.salePrice_lte}
+          onChange={handleChange}
+        />
       </Box>
       <Box className={classes.btn}>
         <Button variant="contained" color="primary" size="small" onClick={handleSubmit}>

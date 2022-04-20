@@ -29,6 +29,7 @@ const FILTER_LIST = [
     onRemove: () => {},
     onToggle: (filters) => {
       const newFilers = { ...filters };
+
       if (newFilers.isFreeShip) {
         delete newFilers.isFreeShip;
       } else {
@@ -40,7 +41,7 @@ const FILTER_LIST = [
   },
   {
     id: 2,
-    getLabel: (filters) => 'Discount',
+    getLabel: () => 'Discount',
     isActive: () => true,
     isVisible: (filters) => filters.isPromotion,
     isRemovable: true,
@@ -87,7 +88,7 @@ FilterViewer.propTypes = {
 
 function FilterViewer({ filters = {}, onChange = null }) {
   const classes = useStyles();
-
+  console.log(filters);
   const visibleFilters = useMemo(() => {
     return FILTER_LIST.filter((x) => x.isVisible(filters));
   }, [filters]);
@@ -127,12 +128,3 @@ function FilterViewer({ filters = {}, onChange = null }) {
 }
 
 export default FilterViewer;
-
-/* id: number
-- getLabel: (filters) => string
-- isActive: (filters) => true/false
-- isVisible: (filters) => true/false
-- isRemovable: boolean
-- onRemove: func
-- onToggle: func
-*/
