@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@material-ui/core';
+import { Box, Button, TextField, Typography, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,7 +6,31 @@ FilterByPrice.propTypes = {
   onChange: PropTypes.func,
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+    borderTop: `1px solid ${theme.palette.grey[300]}`,
+  },
+  range: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2),
+
+    '& > span': {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
+  },
+  btn: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+}));
+
 function FilterByPrice({ onChange }) {
+  const classes = useStyles();
+
   const [rangePrice, setRangePrice] = useState({
     salePrice_gte: 0,
     salePrice_lte: 0,
@@ -20,25 +44,35 @@ function FilterByPrice({ onChange }) {
       [name]: value,
     }));
   };
-
-  const handleSubmit = () => {
-    if (onChange) onChange(rangePrice);
+  const handleReset = () => {
     setRangePrice({
       salePrice_gte: 0,
       salePrice_lte: 0,
     });
   };
 
+  const handleSubmit = () => {
+    if ((rangePrice.salePrice_gte === 0 && rangePrice.salePrice_lte === 0) || rangePrice.salePrice_lte === 0) return;
+    if (onChange) onChange(rangePrice);
+    handleReset();
+  };
+
   return (
-    <Box>
-      <Typography variant="subtitle2">PRICE</Typography>
-      <Box>
+    <Box className={classes.root}>
+      <Typography variant="subtitle2">SELECT RANGE PRICE</Typography>
+      <Box className={classes.range}>
         <TextField name="salePrice_gte" value={rangePrice.salePrice_gte} onChange={handleChange} />
+        <span>-</span>
         <TextField name="salePrice_lte" value={rangePrice.salePrice_lte} onChange={handleChange} />
       </Box>
-      <Button variant="outlined" color="primary" onClick={handleSubmit}>
-        Apply
-      </Button>
+      <Box className={classes.btn}>
+        <Button variant="contained" color="primary" size="small" onClick={handleSubmit}>
+          Apply
+        </Button>
+        <Button variant="outlined" color="primary" size="small" onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
     </Box>
   );
 }
