@@ -66,6 +66,7 @@ function ListPage(props) {
     }));
   };
 
+  // when onChangeSort has a new value this func executes and sets new filter for the filter state
   const handleSortChange = (newSortValue) => {
     setFilter((preFilters) => ({
       ...preFilters,
@@ -76,6 +77,7 @@ function ListPage(props) {
   const handleFiltersChange = (newFilters) => {
     setFilter((preFilters) => ({
       ...preFilters,
+      // many filters
       ...newFilters,
     }));
   };
