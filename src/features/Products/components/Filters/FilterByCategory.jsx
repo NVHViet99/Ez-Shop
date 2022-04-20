@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, makeStyles } from '@material-ui/core';
 import categoryApi from 'api/categoryApi';
+import ProductSkeletonList from '../ProductSkeletonList';
 
 FilterByCategory.propTypes = {
   onChange: PropTypes.func,
@@ -27,6 +28,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function FilterByCategory({ onChange }) {
+  const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const classes = useStyle();
 
@@ -43,6 +45,7 @@ function FilterByCategory({ onChange }) {
       } catch (error) {
         console.log('Faild to fetch category', error);
       }
+      setLoading(false);
     })();
   }, []);
 
@@ -53,16 +56,22 @@ function FilterByCategory({ onChange }) {
   };
 
   return (
-    <Box className={classes.root}>
-      <Typography>PRODUCTS CATEGORY</Typography>
-      <ul className={classes.menu}>
-        {categoryList.map((category) => (
-          <li key={category.id} onClick={() => handleCategoryClick(category)}>
-            <Typography variant="body2">{category.name}</Typography>
-          </li>
-        ))}
-      </ul>
-    </Box>
+    <>
+      {loading ? (
+        <ProductSkeletonList length={1} minHeight={'223.91px'} />
+      ) : (
+        <Box className={classes.root}>
+          <Typography>PRODUCTS CATEGORY</Typography>
+          <ul className={classes.menu}>
+            {categoryList.map((category) => (
+              <li key={category.id} onClick={() => handleCategoryClick(category)}>
+                <Typography variant="body2">{category.name}</Typography>
+              </li>
+            ))}
+          </ul>
+        </Box>
+      )}
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Pagination } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import productsApi from '../../../api/productApi';
+import FilterViewer from '../components/FilterViewer';
 import ProductFilters from '../components/ProductFilters';
 import ProducList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
@@ -57,7 +58,6 @@ function ListPage(props) {
       setLoading(false);
     })();
   }, [filter]);
-
   // get index of pagination
   const handlePageChange = (_, page) => {
     setFilter((preFilters) => ({
@@ -82,17 +82,18 @@ function ListPage(props) {
     }));
   };
 
+  const setNewFilters = (newFilter) => {
+    setFilter(newFilter);
+  };
+
   return (
     <Box>
       <Container>
         <Grid container spacing={1}>
           <Grid item className={classes.left}>
             <Paper elevation={0}>
-              {loading ? (
-                <ProductSkeletonList length={1} />
-              ) : (
-                <ProductFilters filters={filter} onChange={handleFiltersChange} />
-              )}
+              {/* NOTE filter from parent pass to child by filters, child has event on onChange trigger parent execute */}
+              <ProductFilters filters={filter} onChange={handleFiltersChange} />
             </Paper>
           </Grid>
           <Grid item className={classes.right}>
@@ -101,7 +102,10 @@ function ListPage(props) {
                 currentValueSort is an active tab
               */}
               <ProductSort onChangeSort={handleSortChange} currentValueSort={filter._sort} />
-              {loading ? <ProductSkeletonList length={9} /> : <ProducList data={productList} />}
+              <FilterViewer filters={filter} onChange={setNewFilters} />
+
+              {loading ? <ProductSkeletonList length={9} minHeight={'290px'} /> : <ProducList data={productList} />}
+
               <Box className={classes.pagination}>
                 <Pagination
                   color="primary"
