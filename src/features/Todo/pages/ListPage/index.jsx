@@ -6,9 +6,7 @@ import { useEffect } from 'react';
 import { useMemo } from 'react';
 import TodoForm from '../../components/TodoForm';
 
-ListPage.propTypes = {
-
-};
+ListPage.propTypes = {};
 
 function ListPage(props) {
   const initTodoList = [
@@ -32,6 +30,7 @@ function ListPage(props) {
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+
   const [todoList, setTodoList] = useState(initTodoList);
   const [filteredStatus, setFilteredStatus] = useState(() => {
     const params = queryString.parse(location.search);
@@ -55,7 +54,7 @@ function ListPage(props) {
 
     // update todo list
     setTodoList(newTodoList);
-  }
+  };
 
   const handleShowAllClick = () => {
     // setFilteredStatus('all');
@@ -64,7 +63,7 @@ function ListPage(props) {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
-  }
+  };
 
   const handleShowCompletedClick = () => {
     // setFilteredStatus('completed');
@@ -73,7 +72,7 @@ function ListPage(props) {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
-  }
+  };
 
   const handleShowNewClick = () => {
     // setFilteredStatus('new');
@@ -82,10 +81,10 @@ function ListPage(props) {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
-  }
+  };
 
   const renderedTodoList = useMemo(() => {
-    return todoList.filter(todo => filteredStatus === 'all' || filteredStatus === todo.status);
+    return todoList.filter((todo) => filteredStatus === 'all' || filteredStatus === todo.status);
   }, [todoList, filteredStatus]);
 
   const handleTodoFormSubmit = (values) => {

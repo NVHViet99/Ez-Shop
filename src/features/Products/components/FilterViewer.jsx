@@ -88,7 +88,6 @@ FilterViewer.propTypes = {
 
 function FilterViewer({ filters = {}, onChange = null }) {
   const classes = useStyles();
-  console.log(filters);
   const visibleFilters = useMemo(() => {
     return FILTER_LIST.filter((x) => x.isVisible(filters));
   }, [filters]);

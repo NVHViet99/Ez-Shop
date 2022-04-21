@@ -5,7 +5,7 @@ import { Skeleton } from '@material-ui/lab';
 
 ProductSkeletonList.propTypes = {
   length: PropTypes.number,
-  minHeight: PropTypes.number,
+  minHeight: PropTypes.string,
 };
 
 // ProductSkeletonList.defaultProps = {

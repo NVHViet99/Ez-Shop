@@ -11,10 +11,7 @@ function Album({ album }) {
     <div className="album album--active album--special">
       <div className="album__thumbnail album__thumbnail--active">
         <img className="album__image" src={album.thumbnailUrl} alt={album.name} />
-
-        {/* Other controls */}
       </div>
-
       <p className="album__name">{album.name}</p>
     </div>
   );
