@@ -40,7 +40,7 @@ function QuantityField(props) {
         control={form.control}
         render={({ onChange, onBlur, value, name }) => (
           <Box className={classes.box}>
-            <IconButton onClick={() => setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 1)}>
+            <IconButton onClick={() => setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 0)}>
               <RemoveCircleOutline />
             </IconButton>
 
